@@ -1,0 +1,78 @@
+import React , {Component} from 'react';
+import {Card, CardImg, CardText,
+    CardTitle, CardImgOverlay
+  } from 'reactstrap';
+  import dishDetail from './dishDetail'
+
+class Menu extends Component {
+
+    constructor(){
+        super()
+        
+        this.state = {
+            selectedDish : null
+        }
+    }
+renderDish = (dish) => {
+    this.setState({selectedDish : dish})
+}
+
+displayDish = (dish) => {
+
+    if(dish != null){
+       return(
+        <div className="container">
+            <div className="row">
+            <div className="col-12 col-md-5">
+            <Card className="ml-1">
+            <CardImg object src={dish.image} alt={dish.name}/>
+            <CardTitle heading>{dish.name}</CardTitle>
+            <CardText>{dish.description}</CardText>
+             </Card>
+             </div>
+             <div className="col-12 col-md-5">
+                <h3>Comments</h3>
+                <p>Imagine all the eatable , living in confusion!</p>
+                <p>-- John Lemon , Oct 17 , 2012</p>
+                <p>Sends anyone to heaven , I wish I could get my Mothe-in-law to eat it! </p>
+                <p>-- Paul McVites , Sep 06 , 2014 </p>
+                <p>Eat it , just eat it! </p>
+             </div>
+             </div>
+    </div>
+       )
+    }
+    else {
+        return(
+            <div></div>
+        )
+    }
+}
+
+    render () {
+        const menu = this.props.dishes.map((dish) => {
+            return(
+                <div key={dish.id} className="col-12 col-md-5 m-1">
+                   <Card onClick={() => this.renderDish(dish)}>
+                        <CardImg width="100%" object src={dish.image} alt={dish.name}/>
+                       <CardImgOverlay>
+                        <CardTitle heading>{dish.name}</CardTitle>
+                       </CardImgOverlay>
+                   </Card>
+                </div>
+            )
+        });
+        return (
+            <div className="container">
+                <div className="row">
+                {menu}
+                </div>
+                <div className="row">
+                    {this.displayDish(this.state.selectedDish)}
+                </div>
+            </div>
+        )
+    }
+}
+
+export default Menu;

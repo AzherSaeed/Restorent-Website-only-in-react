@@ -1,78 +1,71 @@
-import React , {Component} from 'react';
-import {Card, CardImg, CardText,
-    CardTitle, CardImgOverlay
+import React from 'react';
+import {Card, CardImg, CardText, BreadcrumbItem , Breadcrumb,
+    CardTitle,
+    CardBody
   } from 'reactstrap';
-  import dishDetail from './dishDetail'
+  import {Link} from 'react-router-dom'
 
-class Menu extends Component {
-
-    constructor(){
-        super()
-        
-        this.state = {
-            selectedDish : null
-        }
-    }
-renderDish = (dish) => {
-    this.setState({selectedDish : dish})
-}
-
-displayDish = (dish) => {
-
-    if(dish != null){
-       return(
-        <div className="container">
-            <div className="row">
-            <div className="col-12 col-md-5">
-            <Card className="ml-1">
+    function RenderDish  ({dish})  {
+        return(
+            <div className="col-12 col-md-5 m-1">
+            <Card>
             <CardImg object src={dish.image} alt={dish.name}/>
-            <CardTitle heading>{dish.name}</CardTitle>
+           <CardBody>
+           <CardTitle heading>{dish.name}</CardTitle>
             <CardText>{dish.description}</CardText>
+           </CardBody>
              </Card>
              </div>
-             <div className="col-12 col-md-5">
-                <h3>Comments</h3>
-                <p>Imagine all the eatable , living in confusion!</p>
-                <p>-- John Lemon , Oct 17 , 2012</p>
-                <p>Sends anyone to heaven , I wish I could get my Mothe-in-law to eat it! </p>
-                <p>-- Paul McVites , Sep 06 , 2014 </p>
-                <p>Eat it , just eat it! </p>
-             </div>
-             </div>
-    </div>
-       )
+             )
     }
-    else {
-        return(
-            <div></div>
-        )
-    }
-}
 
-    render () {
-        const menu = this.props.dishes.map((dish) => {
-            return(
-                <div key={dish.id} className="col-12 col-md-5 m-1">
-                   <Card onClick={() => this.renderDish(dish)}>
-                        <CardImg width="100%" object src={dish.image} alt={dish.name}/>
-                       <CardImgOverlay>
-                        <CardTitle heading>{dish.name}</CardTitle>
-                       </CardImgOverlay>
-                   </Card>
-                </div>
-            )
-        });
+    function RenderComments ({comments}){
+        if (comments != null )
         return (
-            <div className="container">
-                <div className="row">
-                {menu}
-                </div>
-                <div className="row">
-                    {this.displayDish(this.state.selectedDish)}
-                </div>
+            <div className="col-12 col-md-5 m-1">
+                <h4>Comments</h4>
+                <ul className="list-unstyled">
+                    {comments.map((comment) => {
+                        return(
+                        <li key={comment.id}>
+                        <p>{comment.comment}</p>
+                        <p>-- {comment.author}</p>
+                        </li>
+                        )
+                    })}
+                </ul>
             </div>
+        );
+        else return(
+            <div><h1>ye comment ka area ha</h1></div>
         )
     }
+  
+const DishDetail = (props) => {
+   if(props.dish != null)
+   return (
+       <div className="conatiner">
+               <div className="row m-2">
+                <Breadcrumb>
+                    <BreadcrumbItem><Link to="/home">Menu</Link></BreadcrumbItem>
+                    <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
+                </Breadcrumb>
+                <div className="col-12">
+                    <h3>{props.dish.name}</h3>
+                    <hr/>
+                </div>
+                </div>
+        <div className="row">
+        <RenderDish dish={props.dish}/> 
+        <RenderComments comments={props.comments}/>
+        </div>
+       </div>
+   );
+   else 
+   return(
+       <div><h1>ye pic ka area ha</h1></div>
+   );
 }
 
-export default Menu;
+
+export default DishDetail;

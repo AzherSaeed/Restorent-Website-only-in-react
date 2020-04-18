@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 
 const About =  (props) =>  {
 
-    // const leaders = props.leaders.map((leader) => {
-    //     return (
-    //         <p>Leader {leader.name}</p>
-    //     );
-    // });
+    const leaders = props.leaders.map((leader) => {
+        return (
+            <p>Leader {leader.name}</p>
+        );
+    });
 
     return(
         <div className="container">
@@ -66,9 +66,9 @@ const About =  (props) =>  {
                     <h2>Corporate Leadership</h2>
                 </div>
                 <div className="col-12">
-                    {/* <Media list>
+                    <Media list>
                         {leaders}
-                    </Media> */}
+                    </Media>
                 </div>
             </div>
         </div>

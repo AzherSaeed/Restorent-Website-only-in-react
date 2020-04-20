@@ -4,6 +4,7 @@ import {Card, CardImg, CardText, BreadcrumbItem , Breadcrumb,
     CardBody
   } from 'reactstrap';
   import {Link} from 'react-router-dom'
+  import {Loading} from './Loading'
 
     function RenderDish  ({dish})  {
         return(
@@ -34,6 +35,7 @@ import {Card, CardImg, CardText, BreadcrumbItem , Breadcrumb,
                         )
                     })}
                 </ul>
+                {/* <CommentForm dishId={dishId} addComment={addComment}/> */}
             </div>
         );
         else return(
@@ -42,7 +44,26 @@ import {Card, CardImg, CardText, BreadcrumbItem , Breadcrumb,
     }
   
 const DishDetail = (props) => {
-   if(props.dish != null)
+
+    if(props.isLoading){
+        return(
+            <div className="container">
+                <div className="row">
+                    <Loading/>
+                </div>
+            </div>
+        )
+    }
+    else if (props.errMess){
+        return(
+            <div className="container">
+                <div className="row">
+                    <h4>lo g error {props.errMess}</h4>
+                </div>
+            </div>
+        )
+    }
+   else if(props.dish != null)
    return (
        <div className="conatiner">
                <div className="row m-2">
@@ -51,7 +72,7 @@ const DishDetail = (props) => {
                     <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
                 </Breadcrumb>
                 <div className="col-12">
-                    <h3>{props.dish.name}</h3>
+                    <h3>lo g dish name {props.dish.name}</h3>
                     <hr/>
                 </div>
                 </div>
